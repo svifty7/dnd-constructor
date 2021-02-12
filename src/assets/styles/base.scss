@@ -1,0 +1,127 @@
+// Variables
+@import "variables";
+
+*, *:before, *:after {
+  box-sizing: border-box;
+  outline: none;
+  appearance: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+html, body, .app, .main {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+}
+
+html, body {
+  height: 100%;
+}
+
+.app {
+  min-height: 100%;
+}
+
+.main {
+  flex-basis: 100%;
+}
+
+body {
+  font: {
+    size: 16px;
+    style: normal;
+    family: 'Exo 2', sans-serif;
+    weight: 400;
+  }
+
+  color: $black;
+}
+
+a {
+  @include css_anim;
+
+  text-decoration: none;
+  color: $lBlack;
+
+  &:hover {
+    color: $gray;
+  }
+
+  &.is-active {
+    color: $green;
+  }
+}
+
+section {
+  width: 100%;
+  display: block;
+  padding-top: 16px;
+  padding-bottom: 16px;
+  position: relative;
+
+  &:first-child {
+    padding-top: 32px;
+  }
+
+  &:last-child {
+    padding-bottom: 32px;
+  }
+
+  @include media($md) {
+    padding-top: 32px;
+    padding-bottom: 32px;
+
+    &:first-child {
+      padding-top: 48px;
+    }
+    &:last-child {
+      padding-bottom: 48px;
+    }
+  }
+
+  h2 {
+    margin-top: 0;
+  }
+}
+
+ul {
+  padding: 0;
+  list-style: none;
+
+  li {
+    &:before {
+      content: '\2014';
+      margin: 0 8px 0 12px;
+    }
+  }
+}
+
+.hidden {
+  display: none !important;
+}
+
+h1 {
+  font: {
+    size: 28px;
+  };
+  margin: 0;
+  padding: 8px 0;
+
+  display: inline-block;
+}
+
+h2 {
+  font: {
+    size: 24px;
+  };
+  margin: 0;
+  padding: 8px 0;
+
+  display: inline-block;
+}
+
+.schema {
+  display: none !important;
+}
