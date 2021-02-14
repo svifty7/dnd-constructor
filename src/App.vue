@@ -84,12 +84,9 @@
 <style lang="scss" scoped>
     .dnd-app {
         width: 100%;
-        padding: 40px 0 0;
     }
 
     .header {
-        @include content;
-
         position: fixed;
         top: 0;
         left: 0;
@@ -97,10 +94,11 @@
         height: 40px;
         z-index: 100;
         background-color: $white;
-        display: flex;
+        display: none;
         align-items: center;
-        padding-top: 8px;
-        padding-bottom: 8px;
+        padding: 8px 16px;
+        box-shadow: 0 0 8px transparentize($black, .7);
+        overflow: hidden;
 
         &__title {
             width: 100%;
@@ -151,6 +149,7 @@
         z-index: 110;
         display: flex;
         justify-content: flex-start;
+        overflow: hidden;
 
         &__body {
             @include css_anim();
