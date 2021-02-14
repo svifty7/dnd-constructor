@@ -21,7 +21,8 @@
     "scripts": {
         "serve": "vue-cli-service serve",
         "build": "vue-cli-service build",
-        "lint": "vue-cli-service lint"
+        "lint": "vue-cli-service lint",
+        "deploy": "yarn run build && gh-pages -d public_html -b gh-pages"
     },
     "dependencies": {
         "core-js": "3.6.5",
@@ -48,6 +49,7 @@
         "eslint-plugin-import": "2.20.2",
         "eslint-plugin-vue": "6.2.2",
         "file-loader": "6.2.0",
+        "gh-pages": "^3.1.0",
         "lint-staged": "9.5.0",
         "postcss-easy-import": "3.0.0",
         "postcss-loader": "3.0.0",
@@ -63,7 +65,8 @@
     },
     "lint-staged": {
         "*.{js,jsx,vue}": [
-            "vue-cli-service lint"
+            "vue-cli-service lint",
+            "yarn run deploy"
         ]
     }
 }

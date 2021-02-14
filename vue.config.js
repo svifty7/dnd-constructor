@@ -1,6 +1,9 @@
 const path = require('path');
 
 module.exports = {
+    publicPath: process.env.NODE_ENV === 'production'
+        ? '/dnd-constructor/'
+        : '/',
     outputDir: 'public_html',
     filenameHashing: true,
     runtimeCompiler: true,
