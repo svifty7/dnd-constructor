@@ -146,7 +146,7 @@
                 }],
                 maxPageCount: 64,
                 previewIndex: null,
-                loading: false
+                loading: false,
             }
         },
         computed: {
@@ -184,7 +184,7 @@
                         count: page.count,
                         title: defaultPage.name,
                         description: `В количестве ${page.count} стр.`,
-                        src: `/constructor/png/${page.type}.png`,
+                        src: `${this.$baseUrl}/constructor/png/${page.type}.png`,
                     });
 
                     counter++;
@@ -214,6 +214,9 @@
 
                 return pages
             },
+        },
+        mounted() {
+            console.log(this.$baseUrl);
         },
         methods: {
             getPageName(type) {
@@ -265,14 +268,22 @@
 
             async getPages() {
                 return {
-                    mainInfo: await (await fetch('/constructor/pdf/mainInfo.pdf')).arrayBuffer(),
-                    characteristic: await (await fetch('/constructor/pdf/characteristic.pdf')).arrayBuffer(),
-                    inventory: await (await fetch('/constructor/pdf/inventory.pdf')).arrayBuffer(),
-                    spellsOne: await (await fetch('/constructor/pdf/spellsOne.pdf')).arrayBuffer(),
-                    spellsTwo: await (await fetch('/constructor/pdf/spellsTwo.pdf')).arrayBuffer(),
-                    spellsThree: await (await fetch('/constructor/pdf/spellsThree.pdf')).arrayBuffer(),
-                    appearance: await (await fetch('/constructor/pdf/appearance.pdf')).arrayBuffer(),
-                    notes: await (await fetch('/constructor/pdf/notes.pdf')).arrayBuffer(),
+                    mainInfo: await (await fetch(`${this.$baseUrl}/constructor/pdf/mainInfo.pdf`))
+                        .arrayBuffer(),
+                    characteristic: await (await fetch(`${this.$baseUrl}/constructor/pdf/characteristic.pdf`))
+                        .arrayBuffer(),
+                    inventory: await (await fetch(`${this.$baseUrl}/constructor/pdf/inventory.pdf`))
+                        .arrayBuffer(),
+                    spellsOne: await (await fetch(`${this.$baseUrl}/constructor/pdf/spellsOne.pdf`))
+                        .arrayBuffer(),
+                    spellsTwo: await (await fetch(`${this.$baseUrl}/constructor/pdf/spellsTwo.pdf`))
+                        .arrayBuffer(),
+                    spellsThree: await (await fetch(`${this.$baseUrl}/constructor/pdf/spellsThree.pdf`))
+                        .arrayBuffer(),
+                    appearance: await (await fetch(`${this.$baseUrl}/constructor/pdf/appearance.pdf`))
+                        .arrayBuffer(),
+                    notes: await (await fetch(`${this.$baseUrl}/constructor/pdf/notes.pdf`))
+                        .arrayBuffer(),
                 };
             },
 
