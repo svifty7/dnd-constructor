@@ -215,9 +215,6 @@
                 return pages
             },
         },
-        mounted() {
-            console.log(this.$baseUrl);
-        },
         methods: {
             getPageName(type) {
                 const page = this.pages.find(item => item.type === type);
