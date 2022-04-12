@@ -5,27 +5,8 @@
   box-sizing: border-box;
   outline: none;
   appearance: none;
+  user-select: none;
   -webkit-overflow-scrolling: touch;
-}
-
-html, body, .app, .main {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  width: 100%;
-}
-
-html, body {
-  height: 100%;
-}
-
-.app {
-  min-height: 100%;
-}
-
-.main {
-  flex-basis: 100%;
 }
 
 body {
@@ -33,26 +14,59 @@ body {
     size: 16px;
     style: normal;
     family: 'Exo 2', sans-serif;
-    weight: 400;
+    weight: 300;
   }
 
   line-height: 22px;
   color: $black;
+  background-color: $bg;
+  padding-bottom: 46px;
+}
+
+.icons8 {
+  width: 100%;
+  padding: 12px 16px;
+  font-size: 14px;
+  background-color: $white;
+  color: $black;
+  margin-top: auto;
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  text-align: center;
+  box-shadow: 0 0 12px $gray-light;
+  z-index: 1;
+
+  a {
+    color: $green;
+
+    &:hover {
+      @include media($lg) {
+        color: $gray-light;
+      }
+    }
+  }
 }
 
 a {
   @include css_anim;
 
   text-decoration: none;
-  color: $lBlack;
+  color: $blue;
 
   &:hover {
-    color: $gray;
+    @include media($lg) {
+      color: $gray-light;
+    }
   }
 
   &.is-active {
     color: $green;
   }
+}
+
+.drag-target {
+  cursor: grab;
 }
 
 section {
@@ -109,9 +123,9 @@ h1 {
   font: {
     size: 28px;
   };
+
   margin: 0;
   padding: 8px 0;
-
   display: inline-block;
 }
 
@@ -119,9 +133,9 @@ h2 {
   font: {
     size: 24px;
   };
+
   margin: 0;
   padding: 8px 0;
-
   display: inline-block;
 }
 
@@ -129,114 +143,7 @@ h2 {
   display: none !important;
 }
 
-.multiselect {
-  color: $black;
-  height: 36px;
-  min-height: 36px;
-  box-sizing: border-box;
-
-  * {
-    box-sizing: border-box;
-  }
-
-  &__tags {
-    min-height: 0;
-    height: 100%;
-    width: 100%;
-    padding: 5px 45px 5px 11px;
-    border: 1px solid $gray;
-    border-radius: 4px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__placeholder, &__input {
-    font-size: 16px;
-    line-height: 22px;
-    padding: 0;
-    margin: 0;
-    max-width: 100%;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  &__input {
-    color: $black;
-  }
-
-  &__select {
-    width: 34px;
-    height: 34px;
-    border-left: 1px solid $gray;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    right: 1px;
-    top: 1px;
-    left: initial;
-    bottom: initial;
-    background-color: transparent;
-
-    &:before {
-      display: none;
-    }
-
-    &:after {
-      @include css_anim();
-
-      content: '';
-      display: block;
-      width: 0;
-      height: 0;
-      border-style: solid;
-      border-width: 6px 4px 0 4px;
-      border-color: $gray transparent transparent transparent;
-    }
-  }
-
-  &__content {
-    width: 100%;
-
-    &-wrapper {
-      border: 1px solid $gray;
-      border-top: 0;
-    }
-  }
-
-  &__option {
-    padding: 6px 12px;
-    min-height: 36px;
-    max-width: 100%;
-
-    &:after {
-      display: none;
-    }
-
-    &--highlight {
-      background-color: $green;
-    }
-
-    span {
-      font-size: 16px;
-      line-height: 22px;
-      max-width: 100%;
-      white-space: initial;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-  }
-
-  &--active {
-    .multiselect {
-      &__select {
-        transform: none;
-
-        &:after {
-          transform: rotate(-180deg);
-        }
-      }
-    }
-  }
+input,
+textarea {
+  user-select: initial;
 }

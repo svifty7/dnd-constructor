@@ -8,38 +8,46 @@ module.exports = {
     filenameHashing: true,
     runtimeCompiler: true,
     chainWebpack: config => {
-        const svgRule = config.module.rule('svg');
+        config.module
+            .rule('svg')
+            .exclude
+            .add(path.resolve(__dirname, './src/assets/icons/svg'))
+            .end();
 
-        svgRule.uses.clear();
-
-        svgRule.test(/\.svg$/)
+        config.module
+            .rule('svg-icon')
+            .test(/\.svg$/)
             .include
             .add(path.resolve(__dirname, './src/assets/icons/svg'))
             .end()
             .use('svg-sprite-loader')
             .loader('svg-sprite-loader')
-            .options({
-                symbolId: '[name]',
-            });
-
-        const fileRule = config.module.rule('file');
-
-        fileRule.uses.clear();
-
-        fileRule.test(/\.svg$/)
-            .exclude
-            .add(path.resolve(__dirname, './src/assets/icons/svg'))
+            .options({ symbolId: '[name]' })
             .end()
-            .use('file-loader')
-            .loader('file-loader');
+            .use('svgo-loader')
+            .loader('svgo-loader')
+            .options({
+                plugins: [{
+                    name: 'preset-default',
+                    params: {
+                        overrides: { removeViewBox: false },
+                    },
+                }, {
+                    name: 'removeAttrs',
+                    params: {
+                        attrs: '(width|height|style|color|fill)',
+                    },
+                }]
+            })
+            .end();
     },
     css: {
         loaderOptions: {
             sass: {
-                prependData: '@import "@/assets/styles/_variables.scss";',
+                additionalData: '@import "@/assets/styles/_variables.scss";',
                 sassOptions: {
-                    includePaths: ['./node_modules'],
-                },
+                    includePaths: ['./node_modules']
+                }
             },
         },
         sourceMap: process.env.NODE_ENV !== 'production',

@@ -1,21 +1,22 @@
 <template>
-    <svg :style="style"
-         class="svg-icon"
-         viewBox="0 0 16 16"
-         aria-hidden="true"
-         role="img"
+    <svg
+        class="svg-icon"
+        viewBox="0 0 16 16"
+        aria-hidden="true"
+        role="img"
     >
         <use :xlink:href="svg"/>
     </svg>
 </template>
 
 <script>
-    import '@/assets/icons/svg/anon.svg';
-    import '@/assets/icons/svg/dnd.svg';
-    import '@/assets/icons/svg/user.svg';
-    import '@/assets/icons/svg/home.svg';
-    import '@/assets/icons/svg/loader.svg';
-    import '@/assets/icons/svg/user-menu.svg';
+    import '@/assets/icons/svg/ok.svg';
+    import '@/assets/icons/svg/add.svg';
+    import '@/assets/icons/svg/copy.svg';
+    import '@/assets/icons/svg/edit.svg';
+    import '@/assets/icons/svg/remove.svg';
+    import '@/assets/icons/svg/plus.svg';
+    import '@/assets/icons/svg/minus.svg';
 
     export default {
         name: 'SvgIcon',
@@ -23,22 +24,11 @@
             iconName: {
                 type: String,
                 required: true,
-            },
-            size: {
-                type: [Number, String],
-                default: 16,
-            },
+            }
         },
         computed: {
             svg() {
-                return `#${this.iconName}`;
-            },
-
-            style() {
-                return {
-                    width: `${this.size}px`,
-                    height: `${this.size}px`,
-                };
+                return `#${ this.iconName }`;
             },
         },
     };
