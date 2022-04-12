@@ -1,6 +1,6 @@
 <template>
     <draggable
-        v-model="getSortedPages"
+        v-model="sortedPages"
         v-bind="dragOptions"
         group="pages"
         item-key="index"
@@ -24,7 +24,7 @@
 <script>
     import PagePreview from '@/views/PagePreview';
     import Draggable from 'vuedraggable';
-    import { mapState } from 'pinia/dist/pinia';
+    import { mapActions, mapState } from 'pinia/dist/pinia';
     import usePagesStore from '@/store';
 
     export default {
@@ -42,9 +42,21 @@
                     group: "pages",
                     disabled: false
                 };
-            }
+            },
+
+            sortedPages: {
+                get() {
+                    return this.getSortedPages;
+                },
+
+                set(value) {
+                    this.setSortedPages(value)
+                }
+            },
         },
         methods: {
+            ...mapActions(usePagesStore, ['setSortedPages']),
+
             downloadPDF(pdf) {
                 const url = document.createElement('a');
                 const blob = new Blob([pdf], {

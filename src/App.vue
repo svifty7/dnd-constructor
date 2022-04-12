@@ -1,4 +1,10 @@
 <template>
+    <header class="header">
+        <button class="customize-btn">
+            <svg-icon icon-name="customize"/>
+        </button>
+    </header>
+
     <main class="dnd-app">
         <char-journal/>
     </main>
@@ -11,19 +17,58 @@
     import CharJournal from '@/views/CharJournal';
     import usePagesStore from '@/store';
     import { mapActions, mapState } from 'pinia/dist/pinia';
+    import SvgIcon from '@/components/UI/SvgIcon';
 
     export default {
         name: 'App',
-        components: { CharJournal },
+        components: {
+            SvgIcon,
+            CharJournal
+        },
         mixins: [ScrollLock],
         computed: {
-            ...mapState(usePagesStore, ['getDefaultPages'])
+            ...mapState(usePagesStore, ['getDefaultPages', 'getPagesStyle'])
         },
         beforeMount() {
             this.setSortedPages(Object.values(this.getDefaultPages));
+
+            const pagesStore = usePagesStore();
+
+            pagesStore.$subscribe(this.updateStyleVariables);
+
+            this.updateStyleVariables();
         },
         methods: {
-            ...mapActions(usePagesStore, ['setSortedPages'])
+            ...mapActions(usePagesStore, ['setSortedPages']),
+
+            updateStyleVariables() {
+                const style = this.getPagesStyle;
+
+                document.documentElement.style.setProperty(
+                    '--page-color-accent',
+                    style.color.accent
+                );
+
+                document.documentElement.style.setProperty(
+                    '--page-color-background',
+                    style.color.background
+                );
+
+                document.documentElement.style.setProperty(
+                    '--page-additional-color-accent',
+                    style.additional.accent
+                );
+
+                document.documentElement.style.setProperty(
+                    '--page-additional-color-background',
+                    style.additional.background
+                );
+
+                document.documentElement.style.setProperty(
+                    '--page-additional-background-opacity',
+                    style.additional.backgroundOpacity
+                );
+            }
         }
     };
 </script>

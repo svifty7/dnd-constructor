@@ -1,15 +1,15 @@
 <template>
-    <div class="page-preview">
+    <div
+        class="page-preview"
+        :class="{'is-selected': page.selected}"
+    >
         <div class="page-preview__body">
             <div class="page-preview__img drag-target">
-                <component
-                    :is="pages[page.name]"
-                    :accent-color="'#1c1c1e'"
-                    :background-color="'#ffffff'"
-                    :additional-accent-color="'#aeaeb2'"
-                    :additional-background-color="'#f2f2f7'"
-                    :additional-background-color-opacity="1"
-                />
+                <!--                <component-->
+                <!--                    :is="pages[page.name]"-->
+                <!--                    @click.left.exact.prevent.stop="toggleSortedPageSelected(page.index)"-->
+                <!--                />-->
+                <svg-page :page-name="page.preview"/>
             </div>
 
             <div class="page-preview__controls">
@@ -27,7 +27,7 @@
 
                 <button
                     class="page-preview__btn is-add"
-                    @click.left.prevent.exact="openModalCreate"
+                    @click.left.exact.prevent.stop="openModalCreate"
                 >
                     <span class="page-preview__btn_icon">
                         <svg-icon icon-name="add"/>
@@ -44,46 +44,47 @@
 
 <script>
     import SvgIcon from '@/components/UI/SvgIcon';
-    import AppearancePage from '@/components/pages/AppearancePage';
-    import CharBasePage from '@/components/pages/CharBasePage';
-    import CharResourcePage from '@/components/pages/CharResourcePage';
-    import CharResourceDoublePage from '@/components/pages/CharResourceDoublePage';
-    import InfoPage from '@/components/pages/InfoPage';
-    import InventoryPage from '@/components/pages/InventoryPage';
-    import NotesPage from '@/components/pages/NotesPage';
-    import SpellsOnePage from '@/components/pages/SpellsOnePage';
-    import SpellsTwoPage from '@/components/pages/SpellsTwoPage';
-    import SpellsThreePage from '@/components/pages/SpellsThreePage';
-    import { shallowRef } from 'vue';
+    // import AppearancePage from '@/components/pages/AppearancePage';
+    // import CharBasePage from '@/components/pages/CharBasePage';
+    // import CharResourcePage from '@/components/pages/CharResourcePage';
+    // import CharResourceDoublePage from '@/components/pages/CharResourceDoublePage';
+    // import InfoPage from '@/components/pages/InfoPage';
+    // import InventoryPage from '@/components/pages/InventoryPage';
+    // import NotesPage from '@/components/pages/NotesPage';
+    // import SpellsOnePage from '@/components/pages/SpellsOnePage';
+    // import SpellsTwoPage from '@/components/pages/SpellsTwoPage';
+    // import SpellsThreePage from '@/components/pages/SpellsThreePage';
+    // import { shallowRef } from 'vue';
     import CreatePageModal from '@/components/modals/CreatePageModal';
     import { mapActions } from 'pinia/dist/pinia';
     import usePagesStore from '@/store';
+    import SvgPage from '@/components/UI/SvgPage';
 
     export default {
         name: 'PagePreview',
-        components: { SvgIcon },
+        components: { SvgPage, SvgIcon },
         props: {
             page: {
                 type: Object,
                 default: () => ({})
             }
         },
-        data: () => ({
-            pages: {
-                Info: shallowRef(InfoPage),
-                CharBase: shallowRef(CharBasePage),
-                CharResource: shallowRef(CharResourcePage),
-                CharResourceDouble: shallowRef(CharResourceDoublePage),
-                Inventory: shallowRef(InventoryPage),
-                SpellsOne: shallowRef(SpellsOnePage),
-                SpellsTwo: shallowRef(SpellsTwoPage),
-                SpellsThree: shallowRef(SpellsThreePage),
-                Appearance: shallowRef(AppearancePage),
-                Notes: shallowRef(NotesPage),
-            }
-        }),
+        // data: () => ({
+        //     pages: {
+        //         Info: shallowRef(InfoPage),
+        //         CharBase: shallowRef(CharBasePage),
+        //         CharResource: shallowRef(CharResourcePage),
+        //         CharResourceDouble: shallowRef(CharResourceDoublePage),
+        //         Inventory: shallowRef(InventoryPage),
+        //         SpellsOne: shallowRef(SpellsOnePage),
+        //         SpellsTwo: shallowRef(SpellsTwoPage),
+        //         SpellsThree: shallowRef(SpellsThreePage),
+        //         Appearance: shallowRef(AppearancePage),
+        //         Notes: shallowRef(NotesPage),
+        //     }
+        // }),
         methods: {
-            ...mapActions(usePagesStore, ['addSortedPages']),
+            ...mapActions(usePagesStore, ['addSortedPages', 'toggleSortedPageSelected']),
 
             openModalCreate() {
                 this.$vfm.show({
@@ -105,14 +106,15 @@
             @include css_anim();
 
             width: 100%;
-            background-color: $white;
             border-radius: 8px;
             overflow: hidden;
+            border: 2px solid transparent;
         }
 
         &__img {
             width: 100%;
             position: relative;
+            background-color: $white;
 
             &:before {
                 content: '';
@@ -137,6 +139,7 @@
             width: 100%;
             z-index: 1;
             position: relative;
+            background-color: $white;
 
             &:hover {
                 @include media($lg) {
@@ -205,6 +208,23 @@
                     &__body {
                         box-shadow: 0 0 12px $gray-light;
                     }
+
+                    &:not(.is-selected) {
+                        .page-preview {
+                            &__body {
+                                border-color: transparentize($blue, .5);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+
+        &.is-selected {
+            .page-preview {
+                &__body {
+                    box-shadow: 0 0 12px $gray-light;
+                    border-color: $blue;
                 }
             }
         }
